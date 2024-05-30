@@ -39,6 +39,32 @@ if filetype.find('ysl') > 0:
 if filetype.find('balenciaga') > 0:
     setupid = 66
     filecolumns = ['BrandID', 'F0', 'F1','F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11','F12','F13','F14', 'F15', 'F16', 'F17', 'F18', 'F19', 'F20', 'F21','F22','F23','F24','F25','F26','F27']
+if filetype.find('versace') > 0:
+    setupid = 544
+    filecolumns = ['BrandID', 'F0', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12', 'F13',
+                   'F14', 'F15', 'F16', 'F17', 'F18', 'F19', 'F20']
+if filetype.find('ferragamo') > 0:
+    setupid = 481
+    filecolumns = ['BrandID', 'F0', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7']
+if filetype.find('balmain') > 0:
+    setupid = 68
+    filecolumns = ['BrandID', 'F0', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12', 'F13',
+                   'F14', 'F15', 'F16']
+if filetype.find('fendi') > 0:
+    setupid = 201
+    filecolumns = ['BrandID', 'F0', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8']
+    
+if filetype.find('moncler') > 0:
+    setupid = 363
+    filecolumns = ['BrandID', 'F0', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8','F9']
+    
+if filetype.find('givenchy') > 0:
+    setupid = 227
+    filecolumns = ['BrandID', 'F0', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8','F9']
+    
+if filetype.find('mccartney') > 0:
+    setupid = 498
+    filecolumns = ['BrandID', 'F0', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8','F9']
 
 if setupid > 0 :
 
