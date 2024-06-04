@@ -53,17 +53,23 @@ if filetype.find('balmain') > 0:
 if filetype.find('fendi') > 0:
     setupid = 201
     filecolumns = ['BrandID', 'F0', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8']
-    
 if filetype.find('moncler') > 0:
     setupid = 363
     filecolumns = ['BrandID', 'F0', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8','F9']
-    
 if filetype.find('givenchy') > 0:
     setupid = 227
     filecolumns = ['BrandID', 'F0', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8','F9']
-    
 if filetype.find('mccartney') > 0:
     setupid = 498
+    filecolumns = ['BrandID', 'F0', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8','F9']
+if filetype.find('etro') > 0:
+    setupid = 187
+    filecolumns = ['BrandID', 'F0', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7']
+if filetype.find('burberry') > 0:
+    setupid = 101
+    filecolumns = ['BrandID', 'F0', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8']
+if filetype.find('marant') > 0:
+    setupid = 252
     filecolumns = ['BrandID', 'F0', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8','F9']
 
 if setupid > 0 :
