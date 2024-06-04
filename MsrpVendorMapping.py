@@ -114,7 +114,30 @@ def create_sql(brandID):
                     From utb_RetailLoadInitial
                     Where BrandID =
                     ''' + str(brandID)
-
+    if int(brandID) == 187:
+        # Etro
+        sql = '''Insert into utb_RetailLoadTemp
+                    (BrandID,       Style, Title, Currency,MsrpPrice,MsrpDiscount,ProductUrl,ProductImageUrl,ExtraImageUrl,ColorCode,ColorName,MaterialCode,Category,Type,Season)
+                    Select BrandID,  F1,   F3,     left(F2,40),   F4  ,    F5,      F2,      left(F6,1000),    left(F6,1000),    NULL,   NULL,       NULL,   F0 ,  NULL,  NULL
+                    From utb_RetailLoadInitial
+                    Where BrandID =
+                    ''' + str(brandID)
+    if int(brandID) == 101:
+        # Burberry
+        sql = '''Insert into utb_RetailLoadTemp
+                    (BrandID,       Style, Title, Currency,MsrpPrice,MsrpDiscount,ProductUrl,ProductImageUrl,ExtraImageUrl,ColorCode,ColorName,MaterialCode,Category,Type,Season)
+                    Select BrandID,  F2,   F1,  left(F3,40),   F5  ,    F6,        F3,          F4,            NULL,            NULL,   NULL,       NULL,       F0 ,  NULL,  NULL
+                    From utb_RetailLoadInitial
+                    Where BrandID =
+                    ''' + str(brandID)
+    if int(brandID) == 252:
+        # Isabel Marant
+        sql = '''Insert into utb_RetailLoadTemp
+                    (BrandID,       Style, Title, Currency,MsrpPrice,MsrpDiscount,ProductUrl,ProductImageUrl,ExtraImageUrl,ColorCode,ColorName,MaterialCode,Category,Type,Season)
+                    Select BrandID, left(F1,50), F2, left(F5,10),  F3  , F4,   F1,               F5,            F5,       NULL,   NULL,       NULL,     F0 ,  NULL,  NULL
+                    From utb_RetailLoadInitial
+                    Where BrandID =
+                    ''' + str(brandID)
     return sql
 
 def validate_temp_load(brandID):
@@ -199,8 +222,45 @@ def validate_temp_load(brandID):
         # Stella Mccartney
         sql = (f"Update utb_RetailLoadTemp set MsrpPrice = Trim(Replace(Replace(MsrpPrice, '$',''), ',',''))  Where BrandID ={brandID}\n"
                f"Update utb_RetailLoadTemp set Currency = 'USD' Where Currency like '%/us/%' and BrandID ={brandID}")
+    if int(brandID) == 187:
+         #Etro
+         sql = (f"Update utb_RetailLoadTemp set MsrpPrice = Trim(Replace(Replace(MsrpPrice, '$',''), ',',''))  Where BrandID ={brandID}\n"
+                f"UPDATE utb_RetailLoadTemp\n"
+                f"SET ProductImageUrl = CASE\n"
+                f"WHEN CHARINDEX(',', ProductImageUrl) > 0 THEN \n"
+                f"LTRIM(RTRIM(SUBSTRING(ProductImageUrl, 1, CHARINDEX(',', ProductImageUrl) - 1)))\n "
+                f"ELSE ProductImageUrl\n"
+                f"END\n "
+                f"WHERE BrandID = {brandID}\n"
+                f"Update utb_RetailLoadTemp set Currency = 'USD' Where Currency like '%/us-en/%' and BrandID ={brandID}")
+    if int(brandID) == 101:
+        # Burberry
+        sql = (f"Update utb_RetailLoadTemp set MsrpPrice = Trim(Replace(Replace(MsrpPrice, '$',''), ',',''))  Where BrandID ={brandID}\n"
+               f"Update utb_RetailLoadTemp set Currency = 'USD' Where Currency like '%us.burberry%' and BrandID ={brandID}")
 
-    return sql
+
+    if int(brandID) == 252:
+         #Etro
+         sql = (f"Update utb_RetailLoadTemp set MsrpPrice = Trim(Replace(Replace(MsrpPrice, '$',''), ',',''))  Where BrandID ={brandID}\n"
+                f"Update utb_RetailLoadTemp\n"
+                f"SET Style = UPPER(SUBSTRING(Style,CHARINDEX('/products/', Style) + LEN('/products/'),\n"
+                f"CHARINDEX('-', Style, CHARINDEX('/products/', Style) + LEN('/products/')) - (CHARINDEX('/products/', Style) + LEN('/products/'))))\n"
+                f"WHERE Style LIKE '/products/%-%' AND BrandID ={brandID}"
+                f"UPDATE utb_RetailLoadTemp\n"
+                f"SET ProductImageUrl = CASE\n"
+                f"WHEN CHARINDEX(',', ProductImageUrl) > 0 THEN \n"
+                f"LTRIM(RTRIM(SUBSTRING(ProductImageUrl, 1, CHARINDEX(',', ProductImageUrl) - 1)))\n "
+                f"ELSE ProductImageUrl\n"
+                f"END\n "
+                f"WHERE BrandID = {brandID}\n"
+                f"Update utb_RetailLoadTemp\n"
+                f"SET ProductImageUrl = REPLACE(ProductImageUrl, '//', '')\n"
+                f"WHERE ProductImageUrl LIKE '%//%' and BrandID ={brandID}\n"
+                f"Update utb_RetailLoadTemp set ProductUrl = 'https://us.isabelmarant.com' + Trim(ProductUrl)   where BrandID ={brandID}\n"
+                f"Update utb_RetailLoadTemp set ProductImageUrl = 'https://' + Trim(ProductImageUrl)   where BrandID ={brandID}\n"
+                f"Update utb_RetailLoadTemp set Currency = 'USD' Where Currency like '%//us.isabe%' and BrandID ={brandID}")
+
+
 #1014176-1A09351_1KD60
 
 
