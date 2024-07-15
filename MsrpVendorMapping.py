@@ -50,8 +50,8 @@ def create_sql(brandID):
             Where BrandID = 157
             '''
 
-    if int(brandID) == 93 or int(brandID) == 478 or int(brandID) == 66:
-        #Bottega Venetta , YSL, BALENCIAGA
+    if int(brandID) == 93 or int(brandID) == 66:
+        #Bottega Venetta , BALENCIAGA
         sql = '''Insert into utb_RetailLoadTemp
             (BrandID,       Style, Title, Currency,MsrpPrice,MsrpDiscount,ProductUrl,ProductImageUrl,ExtraImageUrl,ColorCode,ColorName,MaterialCode,Category,Type,Season)
             Select BrandID,  F0,   F2,   left(F26,25),   F13,     F12,        F26,        F25,           NULL,      F10,     F9,      NULL,        F21,     NULL, F3
@@ -196,6 +196,25 @@ def create_sql(brandID):
                     From utb_RetailLoadInitial
                     Where BrandID =
                     ''' + str(brandID)
+    if int(brandID) == 478:
+        ###YSL
+        sql = '''Insert into utb_RetailLoadTemp
+                    (BrandID,       Style, Title, Currency,MsrpPrice,MsrpDiscount,ProductUrl,ProductImageUrl,ExtraImageUrl,ColorCode,ColorName,MaterialCode,Category,Type,Season)
+                    Select BrandID,   F4,   F11,  F25,  F29  ,   F27,               F1,     LEFT(F13,1000),  LEFT(F14,1000),F2,       F12,     NULL,         F0 ,      NULL, F10
+                    From utb_RetailLoadInitial
+                    Where BrandID =
+                    ''' + str(brandID)
+    if int(brandID) == 310:
+        ###LOEWE
+        sql = '''Insert into utb_RetailLoadTemp
+                    (BrandID,       Style, Title, Currency,MsrpPrice,MsrpDiscount,ProductUrl,ProductImageUrl,ExtraImageUrl,ColorCode,ColorName,MaterialCode,Category,Type,Season)
+                    Select BrandID,   F6,   F3,  F13,       F18  ,   NULL,         F38,     LEFT(F27,1000),  NULL,          NULL,       F5,     NULL,         F1 ,      NULL, NULL
+                    From utb_RetailLoadInitial
+                    Where BrandID =
+                    ''' + str(brandID)
+
+
+
 
     return sql
 
@@ -222,9 +241,9 @@ def validate_temp_load(brandID):
                f"Update utb_RetailLoadTemp set MSRPPrice  = MSRPDiscount  Where MSRPDiscount IS NOT NULL  and BrandID ={brandID}")
     if int(brandID) == 478:
         #YSL
-        sql = (f"Update utb_RetailLoadTemp set Currency = 'USD' Where Currency like '%/en-us/%' and BrandID ={brandID}\n"
-               f"Update utb_RetailLoadTemp set ProductUrl = 'https://www.ysl.com' + Trim(ProductUrl)   where BrandID ={brandID}\n"
-               f"Update utb_RetailLoadTemp set MSRPPrice  = MSRPDiscount  Where MSRPDiscount IS NOT NULL  and BrandID ={brandID}")
+        sql = (f"Update utb_RetailLoadTemp set ProductUrl = 'https://www.ysl.com' + Trim(ProductUrl)   where BrandID ={brandID}\n"
+               f"Update utb_RetailLoadTemp set MsrpPrice = Trim(Replace(Replace(MsrpPrice, '$',''), ',',''))  Where BrandID ={brandID}")
+    #            f"Update utb_RetailLoadTemp set MSRPPrice  = MSRPDiscount  Where MSRPDiscount IS NOT NULL  and BrandID ={brandID}")
     if int(brandID) == 66:
         #BALENCIAGA
         sql = (f"Update utb_RetailLoadTemp set Currency = 'USD' Where Currency like '%/en-us/%' and BrandID ={brandID}\n"
@@ -238,7 +257,10 @@ def validate_temp_load(brandID):
         #ferragamo
         sql = (
             f"Update utb_RetailLoadTemp set Currency = 'USD' Where Currency like '%/us/en/%' and BrandID ={brandID}\n"
-            f"Update utb_RetailLoadTemp set MSRPPrice  = MSRPDiscount  Where MSRPPrice IS NULL  and BrandID ={brandID}")
+            f"Update utb_RetailLoadTemp set MSRPPrice  = MSRPDiscount  Where MSRPPrice IS NULL  and BrandID ={brandID}\n"
+            f"Update utb_RetailLoadTemp set MsrpPrice = Trim(Replace(Replace(MsrpPrice, '$',''), ',',''))  Where BrandID = {brandID}"
+        )
+
     if int(brandID) == 68:
         #balmain
         sql = (
