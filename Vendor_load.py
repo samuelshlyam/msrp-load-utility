@@ -61,7 +61,7 @@ if filetype.find('givenchy') > 0:
     filecolumns = ['BrandID', 'F0', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8','F9']
 if filetype.find('mccartney') > 0:
     setupid = 498
-    filecolumns = ['BrandID', 'F0', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8','F9']
+    filecolumns = ['BrandID', 'F0', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8','F9','F10']
 if filetype.find('etro') > 0:
     setupid = 187
     filecolumns = ['BrandID', 'F0', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7']
@@ -79,10 +79,10 @@ if filetype.find('bally') > 0:
     filecolumns = ['BrandID', 'F0', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8','F9','F10']
 if filetype.find('goldengoose') > 0:
     setupid = 228
-    filecolumns = ['BrandID', 'F0', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7']
+    filecolumns = ['BrandID', 'F0', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7','F8']
 if filetype.find('kenzo') > 0:
     setupid = 275
-    filecolumns = ['BrandID', 'F0', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8','F9','F10', 'F11']
+    filecolumns = ['BrandID', 'F0', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8','F9','F10', 'F11','F12']
 if filetype.find('canada_goose') > 0:
     setupid = 110
     filecolumns = ['BrandID', 'F0', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6']
@@ -98,9 +98,9 @@ if filetype.find('loewe') > 0:
 if filetype.find('celine') > 0:
     setupid = 118
     filecolumns = ['BrandID', 'F0', 'F1','F2', 'F3', 'F4', 'F5', 'F6', 'F7']
-if filetype.find('tods') > 0:
-    setupid = 522
-    filecolumns = ['BrandID', 'F0', 'F1','F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11','F12','F13','F14', 'F15', 'F16', 'F17', 'F18', 'F19', 'F20', 'F21','F22','F23','F24','F25','F26']
+if filetype.find('miu_miu') > 0:
+    setupid = 358
+    filecolumns = ['BrandID', 'F0', 'F1','F2', 'F3', 'F4', 'F5', 'F6', 'F7']
 
 
 if setupid > 0 :
