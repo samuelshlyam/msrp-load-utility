@@ -271,7 +271,7 @@ def validate_temp_load(brandID):
         #YSL
         sql = (f"Update utb_RetailLoadTemp set ProductUrl = 'https://www.ysl.com' + Trim(ProductUrl)   where BrandID ={brandID}\n"
                f"Update utb_RetailLoadTemp set MsrpPrice = Trim(Replace(Replace(MsrpPrice, '$',''), ',',''))  Where BrandID ={brandID}")
-    #            f"Update utb_RetailLoadTemp set MSRPPrice  = MSRPDiscount  Where MSRPDiscount IS NOT NULL  and BrandID ={brandID}")
+                f"Update utb_RetailLoadTemp set MSRPPrice  = MSRPDiscount  Where MSRPDiscount IS NOT NULL  and BrandID ={brandID}")
     if int(brandID) == 66:
         #BALENCIAGA
         sql = (f"Update utb_RetailLoadTemp set Currency = 'USD' Where Currency like '%/en-us/%' and BrandID ={brandID}\n"
@@ -502,9 +502,6 @@ def validate_temp_load(brandID):
             f"ELSE ProductImageUrl\n"
             f"END\n "
             f"WHERE BrandID = {brandID}\n"
-
-
-
             f"Update utb_RetailLoadTemp set MsrpPrice = Trim(Replace(Replace(MsrpPrice, '$',''), ',',''))  Where BrandID = {brandID};")
 
 
@@ -563,6 +560,8 @@ def validate_temp_load(brandID):
             f"END\n"
             f"Where BrandID ={brandID}\n"
             )
+
+            f"Update utb_RetailLoadTemp set MsrpPrice = Trim(Replace(Replace(MsrpPrice, '$',''), ',',''))  Where BrandID = {brandID};")
 
     return sql
 def sql_execute(sql):
