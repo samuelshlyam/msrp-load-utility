@@ -208,10 +208,18 @@ def create_sql(brandID):
         ###LOEWE
         sql = '''Insert into utb_RetailLoadTemp
                     (BrandID,       Style, Title, Currency,MsrpPrice,MsrpDiscount,ProductUrl,ProductImageUrl,ExtraImageUrl,ColorCode,ColorName,MaterialCode,Category,Type,Season)
-                    Select BrandID,   F6,   F3,  F13,       F18  ,   NULL,         F38,     LEFT(F27,1000),  LEFT(F15,1000),          NULL,       F5,     NULL,         F1 ,      NULL, NULL
+                    Select BrandID,   F6,   F3,  F13,       F18  ,   NULL,         F38,     LEFT(F27,1000),  NULL,          NULL,       F5,     NULL,         F1 ,      NULL, NULL
                     From utb_RetailLoadInitial
                     Where BrandID =
                     ''' + str(brandID)
+    if int(brandID) == 358:
+        ###Miu Miu
+        sql = '''Insert into utb_RetailLoadTemp
+                       (BrandID,       Style, Title, Currency,MsrpPrice,MsrpDiscount,ProductUrl,ProductImageUrl,ExtraImageUrl,ColorCode,ColorName,MaterialCode,Category,Type,Season)
+                       Select BrandID,   F2,   F1,  F5,       F5  ,   NULL,         F3,     LEFT(F4,1000),  LEFT(F4,1000),          NULL,       NULL,     NULL,         F0 ,      NULL, NULL
+                       From utb_RetailLoadInitial
+                       Where BrandID =
+                       ''' + str(brandID)
     if int(brandID)==118:
         ###Celine
         sql = '''Insert into utb_RetailLoadTemp
@@ -236,6 +244,7 @@ def create_sql(brandID):
                      From utb_RetailLoadInitial
                      Where BrandID =
                      ''' + str(brandID)
+
     if int(brandID) == 439:
         ###Prada
         sql = '''Insert into utb_RetailLoadTemp
@@ -252,7 +261,6 @@ def create_sql(brandID):
                      From utb_RetailLoadInitial
                      Where BrandID =
                      ''' + str(brandID)
-
 
 
     return sql
@@ -466,7 +474,7 @@ def validate_temp_load(brandID):
             f"Update utb_RetailLoadTemp set MsrpPrice = Trim(Replace(Replace(MsrpPrice, '$',''), ',',''))  Where BrandID = {brandID};")
 
     if int(brandID) == 165:
-        # DSquared2
+        # Canada Goose
         sql = (
             f"Update utb_RetailLoadTemp set Currency = 'USD' Where Currency like '%/us/%' and BrandID ={brandID}\n"
 
@@ -500,6 +508,20 @@ def validate_temp_load(brandID):
             f"WHERE CHARINDEX('-', MsrpPrice) > 0\n"
             f"AND BrandID = {brandID}\n"
             f"Update utb_RetailLoadTemp set MsrpPrice = Trim(Replace(Replace(MsrpPrice, '$',''), ',',''))  Where BrandID = {brandID};")
+    if int(brandID) == 358:
+        # Miu Miu
+        sql = (
+            f"Update utb_RetailLoadTemp set Currency = 'USD' Where Currency like '%$%' and BrandID ={brandID}\n"
+
+            f"UPDATE utb_RetailLoadTemp\n"
+            f"SET ProductImageUrl = CASE\n"
+            f"WHEN CHARINDEX(',', ProductImageUrl) > 0 THEN \n"
+            f"LTRIM(RTRIM(SUBSTRING(ProductImageUrl, 1, CHARINDEX(',', ProductImageUrl) - 1)))\n "
+            f"ELSE ProductImageUrl\n"
+            f"END\n "
+            f"WHERE BrandID = {brandID}\n"
+            f"Update utb_RetailLoadTemp set MsrpPrice = Trim(Replace(Replace(MsrpPrice, '$',''), ',',''))  Where BrandID = {brandID};")
+
     if int(brandID)==118:
         #Celine
         sql = (f"Update utb_RetailLoadTemp set ProductUrl = 'https://www.celine.com' + Trim(ProductUrl)   where BrandID ={brandID}\n"
@@ -555,51 +577,6 @@ def validate_temp_load(brandID):
             f"END\n"
             f"Where BrandID ={brandID}\n"
             )
-    if int(brandID) == 439:
-        # Prada
-        sql = (
-            f"Update utb_RetailLoadTemp set ProductUrl = 'https://prada.com' + Trim(ProductUrl)   where BrandID ={brandID}\n"
-            f"UPDATE utb_RetailLoadTemp\n"
-            f"SET ProductImageUrl = CASE\n"
-            f"  WHEN CHARINDEX('|', ProductImageUrl) > 0 THEN \n"
-            f"    CASE\n"
-            f"     WHEN CHARINDEX('|', ProductImageUrl, CHARINDEX('|', ProductImageUrl) + 1) > 0 THEN \n"
-            f"       LTRIM(RTRIM(SUBSTRING(ProductImageUrl, \n"
-            f"                            CHARINDEX('|', ProductImageUrl) + 1, \n"
-            f"                            CHARINDEX('|', ProductImageUrl, CHARINDEX('|', ProductImageUrl) + 1) - CHARINDEX('|', ProductImageUrl) - 1)))\n"
-            f"  ELSE \n"
-            f"     LTRIM(RTRIM(SUBSTRING(ProductImageUrl, \n"
-            f"                          CHARINDEX('|', ProductImageUrl) + 1, \n"
-            f"                         LEN(ProductImageUrl))))\n"
-            f"   END\n"
-            f" ELSE ProductImageUrl\n"
-            f"END\n"
-            f"Where BrandID ={brandID}\n"
-            f"Update utb_RetailLoadTemp set ProductImageUrl = Trim(Replace(ProductImageUrl, ',',''))  Where BrandID = {brandID}\n"
-            f"Update utb_RetailLoadTemp set Currency = 'USD' Where Currency like '%/us/en/%' and BrandID ={brandID}\n"
-            f"Update utb_RetailLoadTemp set MsrpPrice = Trim(Replace(Replace(MsrpPrice, '$',''), ',',''))  Where BrandID ={brandID}"
-            )
-    if int(brandID)==536:
-        #Valentino
-        sql = (
-            f"Update utb_RetailLoadTemp set Currency = 'USD' Where Currency like '%/en-us/%' and BrandID ={brandID}\n"
-            f"UPDATE utb_RetailLoadTemp\n"
-            f"SET ProductImageUrl = CASE\n"
-            f"  WHEN CHARINDEX(',', ProductImageUrl) > 0 THEN \n"
-            f"    CASE\n"
-            f"     WHEN CHARINDEX(',', ProductImageUrl, CHARINDEX(',', ProductImageUrl) + 1) > 0 THEN \n"
-            f"       LTRIM(RTRIM(SUBSTRING(ProductImageUrl, \n"
-            f"                            CHARINDEX(',', ProductImageUrl) + 1, \n"
-            f"                            CHARINDEX(',', ProductImageUrl, CHARINDEX(',', ProductImageUrl) + 1) - CHARINDEX(',', ProductImageUrl) - 1)))\n"
-            f"  ELSE \n"
-            f"     LTRIM(RTRIM(SUBSTRING(ProductImageUrl, \n"
-            f"                          CHARINDEX(',', ProductImageUrl) + 1, \n"
-            f"                         LEN(ProductImageUrl))))\n"
-            f"   END\n"
-            f" ELSE ProductImageUrl\n"
-            f"END\n"
-            f"Where BrandID ={brandID}\n"
-        )
     return sql
 def sql_execute(sql):
     if len(sql) > 0:
