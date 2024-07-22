@@ -23,6 +23,7 @@ wheels/
 share/python-wheels/
 *.egg-info/
 .installed.cfg
+settings_vendor_load.py
 *.egg
 MANIFEST
 
