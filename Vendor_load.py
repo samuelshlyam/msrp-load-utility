@@ -133,6 +133,30 @@ if filetype.find('gianvito') > 0:
 if filetype.find('jimmy_choo') > 0:
     setupid = 266
     filecolumns = ['BrandID', 'F0', 'F1','F2', 'F3', 'F4', 'F5', 'F6', 'F7','F8','F9','F10','F11','F12','F13','F14']
+if filetype.find('stone_island') > 0:
+    setupid = 500
+    filecolumns = ['BrandID', 'F0', 'F1','F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11','F12','F13','F14', 'F15', 'F16', 'F17', 'F18', 'F19', 'F20', 'F21','F22','F23']
+if filetype.find('herno') > 0:
+    setupid = 604
+    filecolumns = ['BrandID', 'F0', 'F1','F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10']
+if filetype.find('manolo') > 0:
+    setupid = 327
+    filecolumns = ['BrandID', 'F0', 'F1','F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9']
+if filetype.find('aquazzura') > 0:
+    setupid = 46
+    filecolumns = ['BrandID', 'F0', 'F1','F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8']
+if filetype.find('veja') > 0:
+    setupid = 542
+    filecolumns = ['BrandID', 'F0', 'F1','F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8','F9']
+if filetype.find('the_row') > 0:
+    setupid = 512
+    filecolumns = ['BrandID', 'F0', 'F1','F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8','F9']
+if filetype.find('tom_ford') > 0:
+    setupid = 523
+    filecolumns = ['BrandID', 'F0', 'F1','F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8']
+if filetype.find('acne_studios') > 0:
+    setupid = 7
+    filecolumns = ['BrandID', 'F0', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10','F11']
 
 
 if setupid > 0 :

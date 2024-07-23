@@ -285,8 +285,62 @@ def create_sql(brandID):
                      From utb_RetailLoadInitial
                      Where BrandID =
                      ''' + str(brandID)
-
-
+    if int(brandID) == 500:
+        ###Stone Island
+        sql = '''Insert into utb_RetailLoadTemp
+                     (BrandID,       Style, Title, Currency,    MsrpPrice,MsrpDiscount,ProductUrl,ProductImageUrl,ExtraImageUrl,ColorCode,ColorName,MaterialCode,Category,Type,Season)
+                     Select BrandID,   F5,   F21,  LEFT(F19,40),   F2  ,   F3,          F19,     LEFT(F20,1000),  LEFT(F20,1000), F10, LEFT(F11,100),NULL,       F9 ,      NULL, NULL
+                     From utb_RetailLoadInitial
+                     Where BrandID =
+                     ''' + str(brandID)
+    if int(brandID) == 604:
+        ###Herno
+        sql = '''Insert into utb_RetailLoadTemp
+                     (BrandID,       Style, Title, Currency,    MsrpPrice,MsrpDiscount,ProductUrl,ProductImageUrl,ExtraImageUrl,ColorCode,ColorName,MaterialCode,Category,Type,Season)
+                     Select BrandID,   F2,   F1,  LEFT(F8,40),   F3  ,    F4,          F5,     LEFT(F6,1000), NULL, NULL, LEFT(F7,100),    NULL,       F0 ,      NULL, NULL
+                     From utb_RetailLoadInitial
+                     Where BrandID =
+                     ''' + str(brandID)
+    if int(brandID) == 327:
+        ###Manolo Blahnik
+        sql = '''Insert into utb_RetailLoadTemp
+                     (BrandID,       Style, Title, Currency,    MsrpPrice,MsrpDiscount,ProductUrl,ProductImageUrl,ExtraImageUrl,ColorCode,ColorName,MaterialCode,Category,Type,Season)
+                     Select BrandID,   F2,   F1,  LEFT(F5,40),   F5  ,    F6,          F3,     LEFT(F4,1000),  LEFT(F4,1000),    NULL,    NULL,     NULL,        F0 ,      NULL, NULL
+                     From utb_RetailLoadInitial
+                     Where BrandID =
+                     ''' + str(brandID)
+    if int(brandID) == 46:
+        ###Aquazzura
+        sql = '''Insert into utb_RetailLoadTemp
+                     (BrandID,       Style, Title, Currency,    MsrpPrice,MsrpDiscount,ProductUrl,ProductImageUrl,ExtraImageUrl,ColorCode,ColorName,MaterialCode,Category,Type,Season)
+                     Select BrandID,   F2,   F1,  LEFT(F3,40),   F5  ,    F6,          F3,     LEFT(F4,1000),  NULL,    NULL,    NULL,     NULL,        F0 ,      NULL, NULL
+                     From utb_RetailLoadInitial
+                     Where BrandID =
+                     ''' + str(brandID)
+    if int(brandID) == 542:
+        ###The Row
+        sql = '''Insert into utb_RetailLoadTemp
+                     (BrandID,       Style, Title, Currency,    MsrpPrice,MsrpDiscount,ProductUrl,ProductImageUrl,ExtraImageUrl,ColorCode,ColorName,MaterialCode,Category,Type,Season)
+                     Select BrandID,   F1,   F2,  LEFT(F7,40),   F3  ,    F4,          F7,     LEFT(F5,1000),  LEFT(F6,1000),    NULL,    NULL,     NULL,        F0 ,      NULL, NULL
+                     From utb_RetailLoadInitial
+                     Where BrandID =
+                     ''' + str(brandID)
+    if int(brandID) == 523:
+        ###Tom Ford
+        sql = '''Insert into utb_RetailLoadTemp
+                     (BrandID,       Style, Title, Currency,    MsrpPrice,MsrpDiscount,ProductUrl,ProductImageUrl,ExtraImageUrl,ColorCode,ColorName,MaterialCode,Category,Type,Season)
+                     Select BrandID,   F0,   F1,  LEFT(F3,40),   F3  ,    NULL,          F2,     LEFT(F4,1000),  LEFT(F4,1000),    NULL,    NULL,     NULL,        F7 ,      NULL, NULL
+                     From utb_RetailLoadInitial
+                     Where BrandID =
+                     ''' + str(brandID)
+    if int(brandID) == 7:
+        ###Acne Studios
+        sql = '''Insert into utb_RetailLoadTemp
+                     (BrandID,       Style, Title, Currency,    MsrpPrice,MsrpDiscount,ProductUrl,ProductImageUrl,ExtraImageUrl,ColorCode,ColorName,MaterialCode,Category,Type,Season)
+                     Select BrandID,   F0,   F1,  LEFT(F5,40),   F2  ,    F7,          F5,     LEFT(F4,1000),  LEFT(F4,1000),    NULL,    NULL,     NULL,        F10 ,      NULL, NULL
+                     From utb_RetailLoadInitial
+                     Where BrandID =
+                     ''' + str(brandID)
 
     return sql
 
@@ -636,6 +690,74 @@ def validate_temp_load(brandID):
                 f"ELSE ProductImageUrl\n"
                 f"END\n "
                 f"WHERE BrandID = {brandID}")
+    if int(brandID)==500:
+        #Stone Island
+        sql = (
+            f"Update utb_RetailLoadTemp set Currency = 'USD' Where Currency like '%us%' and BrandID ={brandID}"
+        )
+    if int(brandID)==327:
+        #Manolo Blahnik
+        sql = (
+            f"Update utb_RetailLoadTemp set Currency = 'USD' Where Currency like '%us%' and BrandID ={brandID}\n"
+            f"Update utb_RetailLoadTemp set MsrpPrice = Trim(Replace(Replace(Replace(MsrpPrice, '$',''), ',',''),'US',''))  Where BrandID ={brandID}\n"
+            f"Update utb_RetailLoadTemp set MsrpDiscount = Trim(Replace(Replace(Replace(MsrpDiscount, '$',''), ',',''),'US',''))  Where BrandID ={brandID}\n"
+            f"UPDATE utb_RetailLoadTemp\n"
+            f"SET ProductImageUrl = CASE\n"
+            f"WHEN CHARINDEX(',', ProductImageUrl) > 0 THEN \n"
+            f"LTRIM(RTRIM(SUBSTRING(ProductImageUrl, 1, CHARINDEX(',', ProductImageUrl) - 1)))\n "
+            f"ELSE ProductImageUrl\n"
+            f"END\n "
+            f"WHERE BrandID = {brandID}\n"
+            )
+    if int(brandID)==46:
+        #Aquazzura
+        sql = (
+            f"Update utb_RetailLoadTemp set Currency = 'USD' Where Currency like '%us_en%' and BrandID ={brandID}"
+            f"Update utb_RetailLoadTemp set MsrpPrice = Trim(Replace(Replace(Replace(MsrpPrice, '$',''), ',',''),'US',''))  Where BrandID ={brandID}\n"
+            f"Update utb_RetailLoadTemp set MsrpDiscount = Trim(Replace(Replace(Replace(MsrpDiscount, '$',''), ',',''),'US',''))  Where BrandID ={brandID}"
+
+        )
+    if int(brandID)==542:
+        #Veja
+        sql = (
+            f"Update utb_RetailLoadTemp set Currency = 'USD' Where Currency like '%en_us%' and BrandID ={brandID}"
+            f"Update utb_RetailLoadTemp set MsrpPrice = Trim(Replace(Replace(Replace(MsrpPrice, '$',''), ',',''),'US',''))  Where BrandID ={brandID}\n"
+            f"Update utb_RetailLoadTemp set MsrpDiscount = Trim(Replace(Replace(Replace(MsrpDiscount, '$',''), ',',''),'US',''))  Where BrandID ={brandID}"
+        )
+    if int(brandID)==523:
+        #Tom Ford
+        sql = (
+            f"Update utb_RetailLoadTemp set Currency = 'USD' Where Currency like '%$%' and BrandID ={brandID}"
+            f"Update utb_RetailLoadTemp set MsrpPrice = Trim(Replace(Replace(Replace(MsrpPrice, '$',''), ',',''),'US',''))  Where BrandID ={brandID}\n"
+            f"UPDATE utb_RetailLoadTemp\n"
+            f"SET ProductImageUrl = CASE\n"
+            f"WHEN CHARINDEX(',', ProductImageUrl) > 0 THEN \n"
+            f"LTRIM(RTRIM(SUBSTRING(ProductImageUrl, 1, CHARINDEX(',', ProductImageUrl) - 1)))\n "
+            f"ELSE ProductImageUrl\n"
+            f"END\n "
+            f"WHERE BrandID = {brandID}"
+            )
+    if int(brandID)==7:
+        #Acne Studios
+        sql = (
+            f"Update utb_RetailLoadTemp set Currency = 'USD' Where Currency like '%us/en%' and BrandID ={brandID}"
+            f"Update utb_RetailLoadTemp set MsrpPrice = Trim(Replace(Replace(Replace(MsrpPrice, '$',''), ',',''),'US',''))  Where BrandID ={brandID}\n"
+            f"Update utb_RetailLoadTemp set MsrpDiscount = Trim(Replace(Replace(Replace(MsrpDiscount, '$',''), ',',''),'US',''))  Where BrandID ={brandID}\n"
+            f"UPDATE utb_RetailLoadTemp\n"
+            f"SET ProductImageUrl = CASE\n"
+            f"WHEN CHARINDEX(',', ProductImageUrl) > 0 THEN \n"
+            f"LTRIM(RTRIM(SUBSTRING(ProductImageUrl, 1, CHARINDEX(',', ProductImageUrl) - 1)))\n "
+            f"ELSE ProductImageUrl\n"
+            f"END\n "
+            f"WHERE BrandID = {brandID}"
+            )
+    if int(brandID)==604:
+        #Herno
+        sql = (
+            f"Update utb_RetailLoadTemp set MsrpPrice = Trim(Replace(Replace(Replace(MsrpPrice, '$',''), '.',''),'US',''))  Where BrandID ={brandID}\n"
+            f"Update utb_RetailLoadTemp set MsrpDiscount = Trim(Replace(Replace(Replace(MsrpDiscount, '$',''), '.',''),'US',''))  Where BrandID ={brandID}"
+        )
+
 
     return sql
 def sql_execute(sql):
