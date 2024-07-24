@@ -317,11 +317,11 @@ def create_sql(brandID):
                      From utb_RetailLoadInitial
                      Where BrandID =
                      ''' + str(brandID)
-    if int(brandID) == 542:
+    if int(brandID) == 512:
         ###The Row
         sql = '''Insert into utb_RetailLoadTemp
                      (BrandID,       Style, Title, Currency,    MsrpPrice,MsrpDiscount,ProductUrl,ProductImageUrl,ExtraImageUrl,ColorCode,ColorName,MaterialCode,Category,Type,Season)
-                     Select BrandID,   F1,   F2,  LEFT(F7,40),   F3  ,    F4,          F7,     LEFT(F5,1000),  LEFT(F6,1000),    NULL,    NULL,     NULL,        F0 ,      NULL, NULL
+                     Select BrandID,   F0,   F1,  LEFT(F2,40),   F2  ,    F6,          F5,     LEFT(F4,1000),  LEFT(F4,1000),    NULL,    NULL,     NULL,        F8 ,      NULL, NULL
                      From utb_RetailLoadInitial
                      Where BrandID =
                      ''' + str(brandID)
@@ -756,6 +756,29 @@ def validate_temp_load(brandID):
         sql = (
             f"Update utb_RetailLoadTemp set MsrpPrice = Trim(Replace(Replace(Replace(MsrpPrice, '$',''), '.',''),'US',''))  Where BrandID ={brandID}\n"
             f"Update utb_RetailLoadTemp set MsrpDiscount = Trim(Replace(Replace(Replace(MsrpDiscount, '$',''), '.',''),'US',''))  Where BrandID ={brandID}"
+        )
+    if int(brandID)==512:
+        #The Row
+        sql = (
+            f"Update utb_RetailLoadTemp set MsrpPrice = Trim(Replace(Replace(Replace(MsrpPrice, '$',''), ',',''),'.',''))  Where BrandID ={brandID}\n"
+            f"Update utb_RetailLoadTemp set MsrpDiscount = Trim(Replace(Replace(Replace(MsrpDiscount, '$',''), ',',''),'.',''))  Where BrandID ={brandID}\n"
+            f"Update utb_RetailLoadTemp set Currency = 'USD' Where Currency like '%$%' and BrandID ={brandID}\n"
+            f"Update utb_RetailLoadTemp\n"
+            f"SET ProductImageUrl = CASE\n"
+            f"  WHEN CHARINDEX(',   ', ProductImageUrl) > 0 THEN \n"
+            f"    CASE\n"
+            f"     WHEN CHARINDEX(',', ProductImageUrl, CHARINDEX(',', ProductImageUrl) + 1) > 0 THEN \n"
+            f"       LTRIM(RTRIM(SUBSTRING(ProductImageUrl, \n"
+            f"                            CHARINDEX(',', ProductImageUrl) + 1, \n"
+            f"                            CHARINDEX(',', ProductImageUrl, CHARINDEX(',', ProductImageUrl) + 1) - CHARINDEX(',', ProductImageUrl) - 1)))\n"
+            f"  ELSE \n"
+            f"     LTRIM(RTRIM(SUBSTRING(ProductImageUrl, \n"
+            f"                          CHARINDEX(',', ProductImageUrl) + 1, \n"
+            f"                         LEN(ProductImageUrl))))\n"
+            f"   END\n"
+            f" ELSE ProductImageUrl\n"
+            f"END\n"
+            f"Where BrandID ={brandID}\n"
         )
 
 
