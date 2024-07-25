@@ -157,7 +157,9 @@ if filetype.find('tom_ford') > 0:
 if filetype.find('acne_studios') > 0:
     setupid = 7
     filecolumns = ['BrandID', 'F0', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10','F11']
-
+if filetype.find('chloe') > 0:
+    setupid = 125
+    filecolumns = ['BrandID', 'F0', 'F1','F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11','F12','F13','F14', 'F15', 'F16', 'F17', 'F18', 'F19', 'F20', 'F21','F22','F23','F24']
 
 if setupid > 0 :
 

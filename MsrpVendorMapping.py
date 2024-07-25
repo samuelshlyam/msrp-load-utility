@@ -341,6 +341,14 @@ def create_sql(brandID):
                      From utb_RetailLoadInitial
                      Where BrandID =
                      ''' + str(brandID)
+    if int(brandID) == 125:
+        ###Chloe
+        sql = '''Insert into utb_RetailLoadTemp
+                     (BrandID,       Style, Title, Currency,    MsrpPrice,MsrpDiscount,ProductUrl,ProductImageUrl,ExtraImageUrl,ColorCode,ColorName,MaterialCode,Category,Type,Season)
+                     Select BrandID,   LEFT(F0,50),   F2,  LEFT(F20,40),   F12  ,    F13,          F20,     LEFT(F21,1000),  NULL,       NULL,    F10,     NULL,        F7 ,      NULL, NULL
+                     From utb_RetailLoadInitial
+                     Where BrandID =
+                     ''' + str(brandID)
 
     return sql
 
@@ -712,7 +720,7 @@ def validate_temp_load(brandID):
     if int(brandID)==46:
         #Aquazzura
         sql = (
-            f"Update utb_RetailLoadTemp set Currency = 'USD' Where Currency like '%us_en%' and BrandID ={brandID}"
+            f"Update utb_RetailLoadTemp set Currency = 'USD' Where Currency like '%us_en%' and BrandID ={brandID}\n"
             f"Update utb_RetailLoadTemp set MsrpPrice = Trim(Replace(Replace(Replace(MsrpPrice, '$',''), ',',''),'US',''))  Where BrandID ={brandID}\n"
             f"Update utb_RetailLoadTemp set MsrpDiscount = Trim(Replace(Replace(Replace(MsrpDiscount, '$',''), ',',''),'US',''))  Where BrandID ={brandID}"
 
@@ -720,14 +728,14 @@ def validate_temp_load(brandID):
     if int(brandID)==542:
         #Veja
         sql = (
-            f"Update utb_RetailLoadTemp set Currency = 'USD' Where Currency like '%en_us%' and BrandID ={brandID}"
+            f"Update utb_RetailLoadTemp set Currency = 'USD' Where Currency like '%en_us%' and BrandID ={brandID}\n"
             f"Update utb_RetailLoadTemp set MsrpPrice = Trim(Replace(Replace(Replace(MsrpPrice, '$',''), ',',''),'US',''))  Where BrandID ={brandID}\n"
             f"Update utb_RetailLoadTemp set MsrpDiscount = Trim(Replace(Replace(Replace(MsrpDiscount, '$',''), ',',''),'US',''))  Where BrandID ={brandID}"
         )
     if int(brandID)==523:
         #Tom Ford
         sql = (
-            f"Update utb_RetailLoadTemp set Currency = 'USD' Where Currency like '%$%' and BrandID ={brandID}"
+            f"Update utb_RetailLoadTemp set Currency = 'USD' Where Currency like '%$%' and BrandID ={brandID}\n"
             f"Update utb_RetailLoadTemp set MsrpPrice = Trim(Replace(Replace(Replace(MsrpPrice, '$',''), ',',''),'US',''))  Where BrandID ={brandID}\n"
             f"UPDATE utb_RetailLoadTemp\n"
             f"SET ProductImageUrl = CASE\n"
@@ -740,7 +748,7 @@ def validate_temp_load(brandID):
     if int(brandID)==7:
         #Acne Studios
         sql = (
-            f"Update utb_RetailLoadTemp set Currency = 'USD' Where Currency like '%us/en%' and BrandID ={brandID}"
+            f"Update utb_RetailLoadTemp set Currency = 'USD' Where Currency like '%us/en%' and BrandID ={brandID}\n"
             f"Update utb_RetailLoadTemp set MsrpPrice = Trim(Replace(Replace(Replace(MsrpPrice, '$',''), ',',''),'US',''))  Where BrandID ={brandID}\n"
             f"Update utb_RetailLoadTemp set MsrpDiscount = Trim(Replace(Replace(Replace(MsrpDiscount, '$',''), ',',''),'US',''))  Where BrandID ={brandID}\n"
             f"UPDATE utb_RetailLoadTemp\n"
@@ -780,9 +788,28 @@ def validate_temp_load(brandID):
             f"END\n"
             f"Where BrandID ={brandID}\n"
         )
-
-
+    if int(brandID) == 125:
+        #Chloe
+        sql = (
+            f"Update utb_RetailLoadTemp set Currency = 'USD' Where Currency like '%us%' and BrandID ={brandID}\n"
+            f"UPDATE utb_RetailLoadTemp\n"
+            f"SET Style = CASE\n"
+            f"WHEN CHARINDEX('This', Style) > 0 THEN \n"
+            f"LTRIM(RTRIM(SUBSTRING(Style, 1, CHARINDEX('This', Style) - 1)))\n "
+            f"ELSE Style\n"
+            f"END\n "
+            f"WHERE BrandID = {brandID}"
+        )
+    #
     return sql
+
+# UPDATE utb_RetailLoadInitial
+#                     SET F0 = CASE
+#                     WHEN CHARINDEX('This', F0) > 0 THEN
+#                     LTRIM(RTRIM(SUBSTRING(F0, 1, CHARINDEX('This', F0) - 1)))
+#                     ELSE F0
+#                     END
+#                     WHERE BrandID = 125
 def sql_execute(sql):
     if len(sql) > 0:
         connection = engine.connect()
