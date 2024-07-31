@@ -42,10 +42,10 @@ def create_sql(brandID):
             Where BrandID = 26
             '''
     if int(brandID) == 157:
-        #Alexander Mcqueen BRAND
+        #Dolce Gabbana BRAND
         sql = '''Insert into utb_RetailLoadTemp
             (BrandID,       Style, Title, Currency,MsrpPrice,MsrpDiscount,ProductUrl,ProductImageUrl,ExtraImageUrl,ColorCode,ColorName,MaterialCode,Category,Type,Season)
-            Select BrandID,  F1,   F2,    F5,     F3,        NULL,        F12,        F11,             NULL,           NULL,     NULL,      NULL,           F0,    NULL, NULL
+            Select BrandID,  F1,   F2,    F5,     F3,        NULL,        F12,        F11,             NULL,           NULL,     NULL,      NULL,           LEFT(F12,100    ),    NULL, NULL
             From utb_RetailLoadInitial
             Where BrandID = 157
             '''
@@ -183,7 +183,7 @@ def create_sql(brandID):
         # D2rd Dsquared
         sql = '''Insert into utb_RetailLoadTemp
                     (BrandID,       Style, Title, Currency,MsrpPrice,MsrpDiscount,ProductUrl,ProductImageUrl,ExtraImageUrl,ColorCode,ColorName,MaterialCode,Category,Type,Season)
-                    Select BrandID,   F0,   F1,  LEFT(F7,45),  F2  ,   F4,          F7,        LEFT(F8,1000) ,  LEFT(F8,1000),  NULL,     NULL,     NULL,     F6 ,  NULL,  NULL
+                    Select BrandID,   F0,   F1,  LEFT(F8,45),  F3  ,   F5,          F8,        LEFT(F9,1000) ,  LEFT(F9,1000),  NULL,     F2,     NULL,     F7 ,  NULL,  NULL
                     From utb_RetailLoadInitial
                     Where BrandID =
                     ''' + str(brandID)
@@ -561,10 +561,10 @@ def validate_temp_load(brandID):
             f"Update utb_RetailLoadTemp set MsrpPrice = Trim(Replace(Replace(MsrpPrice, '$',''), ',',''))  Where BrandID = {brandID};")
 
     if int(brandID) == 165:
-        # Canada Goose
+        # DSquared
         sql = (
             f"Update utb_RetailLoadTemp set Currency = 'USD' Where Currency like '%/us/%' and BrandID ={brandID}\n"
-
+            f"Update utb_RetailLoadTemp set Currency = 'EURO' Where Currency like '%/it/%' and BrandID ={brandID}\n"
             f"UPDATE utb_RetailLoadTemp\n"
             f"SET ProductImageUrl = CASE\n"
             f"WHEN CHARINDEX(',', ProductImageUrl) > 0 THEN \n"
@@ -720,9 +720,10 @@ def validate_temp_load(brandID):
     if int(brandID)==46:
         #Aquazzura
         sql = (
+            f"Update utb_RetailLoadTemp set Currency = 'EURO' Where Currency like '%it_en%' and BrandID ={brandID}\n"
             f"Update utb_RetailLoadTemp set Currency = 'USD' Where Currency like '%us_en%' and BrandID ={brandID}\n"
-            f"Update utb_RetailLoadTemp set MsrpPrice = Trim(Replace(Replace(Replace(MsrpPrice, '$',''), ',',''),'US',''))  Where BrandID ={brandID}\n"
-            f"Update utb_RetailLoadTemp set MsrpDiscount = Trim(Replace(Replace(Replace(MsrpDiscount, '$',''), ',',''),'US',''))  Where BrandID ={brandID}"
+            f"Update utb_RetailLoadTemp set MsrpPrice = Trim(Replace(Replace(Replace(Replace(MsrpPrice, '$',''),'€',''), ',',''),'.',''))  Where BrandID ={brandID}\n"
+            f"Update utb_RetailLoadTemp set MsrpDiscount = Trim(Replace(Replace(Replace(Replace(MsrpDiscount, '$',''),'€',''), ',',''),'.',''))  Where BrandID ={brandID}\n"
 
         )
     if int(brandID)==542:

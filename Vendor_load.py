@@ -95,7 +95,7 @@ if filetype.find('canada_goose') > 0:
     filecolumns = ['BrandID', 'F0', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6']
 if filetype.find('dsquared') > 0:
     setupid = 165
-    filecolumns = ['BrandID', 'F0', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8','F9']
+    filecolumns = ['BrandID', 'F0', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8','F9','F10','F11']
 if filetype.find('mcm') > 0:
     setupid = 343
     filecolumns = ['BrandID', 'F0', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7','F8']
