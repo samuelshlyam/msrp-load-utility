@@ -19,6 +19,7 @@ def initialize_load(brandID):
         connection.execute(sql)
         connection.commit()
         connection.close()
+
 filetype = input('''
 Upload ready for:  
 ''').lower()
@@ -29,7 +30,7 @@ if filetype.find('dolce') > 0:
     setupid = 157
     filecolumns = ['BrandID', 'F0', 'F1','F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12']
 
-if filetype.find('alexandermcqueen') > 0:
+if filetype.find('alexander_mcqueen') > 0:
     setupid = 26
     filecolumns = ['BrandID', 'F0', 'F1','F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11','F12','F13','F14', 'F15', 'F16', 'F17', 'F18', 'F19', 'F20', 'F21','F22','F23']
 
@@ -162,11 +163,9 @@ if filetype.find('chloe') > 0:
     filecolumns = ['BrandID', 'F0', 'F1','F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11','F12','F13','F14', 'F15', 'F16', 'F17', 'F18', 'F19', 'F20', 'F21','F22','F23','F24']
 
 if setupid > 0 :
-
     df = pd.read_csv(filetype, quotechar='"',header=None)
     df.insert(0, 'BrandID', setupid)
     df.columns = filecolumns
-
     f = df.iloc[2:]
     initialize_load(setupid)
     df.to_sql('utb_RetailLoadInitial', engine, if_exists='append', index=False)
