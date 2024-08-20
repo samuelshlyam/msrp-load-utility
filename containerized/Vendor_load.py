@@ -254,7 +254,7 @@ def create_sql(brandID):
         # Isabel Marant
         sql = '''Insert into utb_RetailLoadTemp
                     (BrandID,       Style, Title, Currency,MsrpPrice,MsrpDiscount,ProductUrl,ProductImageUrl,ExtraImageUrl,ColorCode,ColorName,MaterialCode,Category,Type,Season)
-                    Select BrandID, left(F1,50), F2, left(F5,10),  F3  , F4,   F1,               F5,            F5,       NULL,   NULL,       NULL,     F0 ,  NULL,  NULL
+                    Select BrandID, left(F1,50), F2, CONCAT(LEFT(F1,10),LEFT(F5,10)),  F3  , F4,   F1,               F5,            F5,       NULL,   NULL,       NULL,     F0 ,  NULL,  NULL
                     From utb_RetailLoadInitial
                     Where BrandID =
                     ''' + str(brandID)
@@ -604,7 +604,6 @@ def validate_temp_load(brandID):
     if int(brandID) == 252:
         # Isabel Marant
         sql = (
-            f"Update utb_RetailLoadTemp set MsrpPrice = Trim(Replace(Replace(MsrpPrice, '$',''), ',',''))  Where BrandID ={brandID}\n"
             f"Update utb_RetailLoadTemp\n"
             f"SET Style = UPPER(SUBSTRING(Style,CHARINDEX('/products/', Style) + LEN('/products/'),\n"
             f"CHARINDEX('-', Style, CHARINDEX('/products/', Style) + LEN('/products/')) - (CHARINDEX('/products/', Style) + LEN('/products/'))))\n"
@@ -621,7 +620,10 @@ def validate_temp_load(brandID):
             f"WHERE ProductImageUrl LIKE '%//%' and BrandID ={brandID}\n"
             f"Update utb_RetailLoadTemp set ProductUrl = 'https://us.isabelmarant.com' + Trim(ProductUrl)   where BrandID ={brandID}\n"
             f"Update utb_RetailLoadTemp set ProductImageUrl = 'https://' + Trim(ProductImageUrl)   where BrandID ={brandID}\n"
-            f"Update utb_RetailLoadTemp set Currency = 'USD' Where Currency like '%//us.isabe%' and BrandID ={brandID}")
+            f"Update utb_RetailLoadTemp set Currency = 'USD' Where Currency like '%//us.isabe%' and BrandID ={brandID}\n"
+            f"Update utb_RetailLoadTemp set Currency = 'EURO' Where Currency like '%/fr-it%' and BrandID ={brandID}\n"
+            f"Update utb_RetailLoadTemp set MsrpPrice = Trim(Replace(Replace(MsrpPrice, '$',''), ',',''))  Where BrandID ={brandID} and Currency like '%USD%'\n"
+            f"Update utb_RetailLoadTemp set MsrpPrice = Trim(Replace(Replace(MsrpPrice, '€',''), '.',''))  Where BrandID ={brandID} and Currency like '%EURO%'\n")
 
     if int(brandID) == 601:
         # Brunello Cucinelli
